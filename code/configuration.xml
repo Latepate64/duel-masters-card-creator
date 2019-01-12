@@ -1,0 +1,69 @@
+<configuration>
+  <json_path>../../duel-masters-json/DuelMastersCards.json</json_path>
+  <producer_text>©2019 Duel Masters Finland</producer_text>
+  <print_set>
+    <set>DM-13 Eternal Phoenix</set>
+    <placeholder_cards>
+      <card>
+        <set>DM-05 Survivors of the Megapocalypse</set>
+        <id>16/55</id>
+      </card>
+      <card>
+        <set>DM-11 Blastosplosion of Gigantic Rage</set>
+        <id>8/55</id>
+      </card>
+      <card>
+        <set>DM-11 Blastosplosion of Gigantic Rage</set>
+        <id>30/55</id>
+      </card>
+    </placeholder_cards>
+  </print_set>
+  <print_cards>
+    <name>print_cards_test</name>
+    <cards>
+      <card>
+        <set>DM-13 Eternal Phoenix</set>
+        <id>1/55</id>
+      </card>
+      <card>
+        <set>DM-13 Eternal Phoenix</set>
+        <id>9/55</id>
+      </card>
+      <card>
+        <set>DM-11 Blastosplosion of Gigantic Rage</set>
+        <id>30/55</id>
+      </card>
+      <card>
+        <set>DM-13 Eternal Phoenix</set>
+        <id>13/55</id>
+      </card>
+      <card>
+        <set>DM-13 Eternal Phoenix</set>
+        <id>22/55</id>
+      </card>
+      <card>
+        <set>DM-13 Eternal Phoenix</set>
+        <id>33/55</id>
+      </card>
+      <card>
+        <set>DM-13 Eternal Phoenix</set>
+        <id>44/55</id>
+      </card>
+      <card>
+        <set>DM-13 Eternal Phoenix</set>
+        <id>54/55</id>
+      </card>
+      <card>
+        <set>DM-13 Eternal Phoenix</set>
+        <id>S3/55</id>
+      </card>
+    </cards>
+  </print_cards>
+  <print_card>
+    <name>print_card_test</name>
+    <card>
+      <set>DM-13 Eternal Phoenix</set>
+      <id>S2/55</id>
+    </card>
+  </print_card>
+</configuration>
