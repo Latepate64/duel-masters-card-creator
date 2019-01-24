@@ -30,7 +30,7 @@ def crop_images_for_creatures(source, destination):
   upper = 80
   h = 272
   for im_path in os.listdir(source):
-    cropped = Image.open(''.join([source, im_path])).crop((left, upper, image_width + left, upper + h))
+    cropped = Image.open('/'.join([source, im_path])).crop((left, upper, image_width + left, upper + h))
     save_image(im_path, cropped, destination)
 
 def crop_images_for_spells(source, destination):
@@ -49,7 +49,7 @@ def crop_image_for_spell(image):
   for offset in offsets:
     x_index = 0
     while x_index < offset:
-      paint_pixel_transparent(im, x_index, y_pos)
+      paint_pixel_transparent_mirror_x(im, x_index, y_pos)
       x_index += 1
     y_pos += 1
   return im
@@ -57,24 +57,25 @@ def crop_image_for_spell(image):
 def crop_images_for_cross_gears(source, destination):
   """Crops images for cross gears."""
   for im_path in os.listdir(source):
-    cropped = crop_image_for_cross_gear(''.join([source, im_path]))
+    cropped = crop_image_for_cross_gear('/'.join([source, im_path]))
     save_image(im_path, cropped, destination)
 
 def crop_image_for_cross_gear(image):
   """Crops an image for a cross gear."""
   im = Image.open(image)
-  left = 10
+  left = 23
   upper = 79
-  h = 270
-  y_mid = upper+h/2
+  height = 270
+  half_height = int(height/2)
   width = 55
-  im = im.crop((left, upper, image_width + left, upper + h)).convert("RGBA")
   for i in range(width):
-    column_pixels_to_remove = y_mid-i
+    column_pixels_to_remove = int(half_height-i*(half_height/width))
     for j in range(column_pixels_to_remove):
-      skip = j + h/2 - column_pixels_to_remove
-      paint_pixel_transparent(im, left+i, skip)
-      paint_pixel_transparent(im, left+i, skip)
+      y_pos1 = upper + j
+      y_pos2 = upper + height - j
+      paint_pixel_transparent(im, left+i, y_pos1)
+      paint_pixel_transparent(im, left+i, y_pos2)
+  im = im.crop((left, upper, image_width + left, upper + height)).convert("RGBA")
   return im
 
 def paint_transparent_pixels(offset_count, current_offset, sub, im, y_pos):
@@ -89,23 +90,30 @@ def paint_transparent_pixels_helper(current_offset, sub, offset_count_index, im,
   current_offset -= sub
   x_index = 0
   while x_index < current_offset:
-    paint_pixel_transparent(im, x_index, y_pos)
+    paint_pixel_transparent_mirror_x(im, x_index, y_pos)
     x_index += 1
   y_pos += 1
   offset_count_index += 1
   return current_offset, offset_count_index, y_pos
 
+def paint_pixel_transparent_mirror_x(im, x_index, y_pos):
+  """Paints a transparent pixel."""
+  pixdata = im.load()
+  #print(str(x_index) + " " + str(y_pos))
+  pixdata[x_index, y_pos] = (255, 255, 255, 0)
+  pixdata[image_width - x_index - 1, y_pos] = (255, 255, 255, 0)
+
 def paint_pixel_transparent(im, x_index, y_pos):
   """Paints a transparent pixel."""
   pixdata = im.load()
+  #print(str(x_index) + " " + str(y_pos))
   pixdata[x_index, y_pos] = (255, 255, 255, 0)
-  pixdata[image_width - x_index - 1, y_pos] = (255, 255, 255, 0)
 
 def main():
   parser = argparse.ArgumentParser(description='Crop artwork from cards.')
   parser.add_argument('source', metavar='source', help='path containing images to be cropped')
   parser.add_argument('destination', metavar='destination', help='destination path for the cropped images (must exist before cropping)')
-  parser.add_argument('card_type', metavar='card_type', help='type of the cards (Creature, Spell or Cross Gear)')
+  parser.add_argument('card_type', metavar='card_type', help='type of the cards (Creature, Spell or CrossGear)')
   args = parser.parse_args()
   print(args.card_type)
   print(args.card_type == 'Spell')
@@ -113,10 +121,12 @@ def main():
     crop_images_for_creatures(args.source, args.destination)
   elif args.card_type == 'Spell':
     crop_images_for_spells(args.source, args.destination)
-  elif args.card_type == 'Cross Gear':
+  elif args.card_type == 'CrossGear':
     crop_images_for_cross_gears(args.source, args.destination)
   else:
     raise Exception('Unknown card type.')
 
 if __name__ == "__main__":
   main()
+
+  #python crop_utility.py C:\Users\lauri\Pictures\DM\dm14_original\cross_gear C:\Users\lauri\Pictures\DM\dm14_testi CrossGear

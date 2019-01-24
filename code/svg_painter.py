@@ -240,7 +240,7 @@ def paint_rarity_super_rare(svg, x, y, r, fill):
   paint_rect(svg, x-r, y-r/3, 2*r/3, 2*r/3, fill)
 
 def get_offsets(x, card_type):
-  x_image = x+get_spec_w(0.10595)
+  x_image = x+get_spec_w(0.1041)
   x_illustrator = x+get_spec_w(0.94)
   x_type_box = x+get_spec_w(0.25)
   x_text_box = x+get_spec_w(0.087)
