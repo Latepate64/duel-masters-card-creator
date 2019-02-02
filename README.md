@@ -9,13 +9,13 @@ crop_utility.py is used in cropping artwork from cards. Cards must be provided i
 
 Pillow library must be installed in order to crop images. In command line, execute command: pip install Pillow
 
-In command line, execute crop\_utility.py as follows: crop_utility.py [source] [destination] [card_type]
+In command line, execute crop\_utility.py as follows: python crop_utility.py [source] [destination] [card_type]
 
 - source: Path containing images to be cropped.
 - destination: Destination path for the cropped images. The path must exist before executing the command.
 - card\_type: Specifies the type of the cards (Creature, Spell or Cross Gear). The type of the cards affects how the images are cropped. Therefore, there should be separate source paths for each card type.
 
-Example command: crop_utility.py path/to/spell/images '../img/artwork/DM-05 Survivors of the Megapocalypse' Spell
+Example command: python crop_utility.py path/to/spell/images '../img/artwork/DM-05 Survivors of the Megapocalypse' Spell
 
 
 ## svg_painter.py:
